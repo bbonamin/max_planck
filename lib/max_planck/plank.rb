@@ -1,5 +1,7 @@
 require 'singleton'
 
+Rectangle = Struct.new(:area)
+
 module MaxPlanck
   class Plank
     include Singleton
@@ -24,6 +26,30 @@ module MaxPlanck
         coordinates = specs[i + 2].split(' ')
         Hole.new(x: coordinates.first, y: coordinates.last)
       end
+    end
+
+    def max_rectangle
+      result = 0
+
+      Coordinate.interesting(@holes).each do |coord|
+        unchecked_holes = Hole.top_and_right(of: coord, holes: @holes)
+        top = height
+        loop do
+          nearest_hole = Hole.nearest(
+            holes: unchecked_holes
+          ) || Coordinate.new(width, height)
+
+          area = (nearest_hole.x - coord.x) * (top - coord.y)
+          result = area if area > result
+
+          top = nearest_hole.y
+          unchecked_holes = unchecked_holes.select { |uh| uh.y < top }
+
+          break if nearest_hole.x == width
+        end
+      end
+
+      Rectangle.new(result)
     end
   end
 end
