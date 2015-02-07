@@ -13,7 +13,7 @@ module MaxPlanck
       instance.from_plank_specs(plank_specs)
 
       holes_count = specs[1].to_i
-      instance.from_holes_from_specs(holes_count, specs) if holes_count
+      instance.holes_from_specs(holes_count, specs) if holes_count
     end
 
     def from_plank_specs(plank_specs)
@@ -21,35 +21,39 @@ module MaxPlanck
       @height = Integer(plank_specs.last)
     end
 
-    def from_holes_from_specs(count, specs)
+    def holes_from_specs(count, specs)
       @holes = count.times.map do |i|
         coordinates = specs[i + 2].split(' ')
         Hole.new(x: coordinates.first, y: coordinates.last)
       end
     end
 
-    def max_rectangle
-      result = 0
+    def max_rectangle_area
+      Coordinate.interesting(@holes).map do |coord|
+        remaining_coords = Coordinate.top_and_right(
+          of: coord,
+          source: @holes)
 
-      Coordinate.interesting(@holes).each do |coord|
-        unchecked_holes = Hole.top_and_right(of: coord, holes: @holes)
-        top = height
+        max_height = height
+        area = 0
+
         loop do
-          nearest_hole = Hole.nearest(
-            holes: unchecked_holes
-          ) || Coordinate.new(width, height)
+          nearest_coord = Coordinate.nearest(
+            source: remaining_coords,
+            max_width: width)
 
-          area = (nearest_hole.x - coord.x) * (top - coord.y)
-          result = area if area > result
+          remaining_coords = Coordinate.shorter(
+            than: nearest_coord.y,
+            source: remaining_coords)
 
-          top = nearest_hole.y
-          unchecked_holes = unchecked_holes.select { |uh| uh.y < top }
+          new_area = (nearest_coord.x - coord.x) * (max_height - coord.y)
+          area = new_area if new_area > area
 
-          break if nearest_hole.x == width
+          max_height = nearest_coord.y
+
+          break(area) if nearest_coord.x == width
         end
-      end
-
-      Rectangle.new(result)
+      end.max
     end
   end
 end
