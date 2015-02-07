@@ -5,7 +5,7 @@ module MaxPlanck
         fail 'Error: A filepath is required as the first argument.'
       end
 
-      puts "File path: #{filepath}"
+      Parser.parse(filepath: filepath)
       puts 18
     rescue => e
       puts e
