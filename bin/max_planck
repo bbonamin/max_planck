@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'max_planck'
+
+MaxPlanck::CLI.run
