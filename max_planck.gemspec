@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = MaxPlanck::VERSION
   spec.authors       = ['Bruno Bonamin']
   spec.email         = ['bruno@bonamin.org']
-  spec.summary       = 'Maximum rectangle of a plank with holes.'
-  spec.description   = 'Calculate the maximum rectangle that ' \
+  spec.summary       = 'Maximum rectangle area of a plank with holes.'
+  spec.description   = 'Calculate the maximum rectangle area that ' \
   'can be cut out of a plank with holes.'
   spec.homepage      = ''
   spec.license       = 'MIT'
