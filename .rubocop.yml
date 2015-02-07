@@ -1,9 +1,3 @@
-# Offense count: 3
-# Configuration parameters: AllowURI, URISchemes.
-# Metrics/LineLength:
-#   Max: 94
-
-# Offense count: 3
 Style/Documentation:
   Enabled: false
 
