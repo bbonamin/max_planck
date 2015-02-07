@@ -45,16 +45,16 @@ module MaxPlanck
       loop do
         nearest_coord = Coordinate.nearest(
           source: remaining_coords,
-          max_width: width)
-
-        remaining_coords = Coordinate.shorter_than(
-          source: remaining_coords,
-          max_height: nearest_coord.y)
+          max_x: width)
 
         new_area = (nearest_coord.x - coord.x) * (max_height - coord.y)
         area = new_area if new_area > area
 
         max_height = nearest_coord.y
+
+        remaining_coords = Coordinate.shorter_than(
+          source: remaining_coords,
+          max_y: max_height)
 
         break(area) if nearest_coord.x == width
       end
