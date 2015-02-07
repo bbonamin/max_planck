@@ -20,12 +20,11 @@ module MaxPlanck
     end
 
     def self.nearest(source:, max_width:)
-      x = source.map(&:x).min
-      source.detect { |h| h.x == x } || new(x: max_width)
+      source.min_by(&:x) || new(x: max_width)
     end
 
-    def self.shorter(than:, source:)
-      source.select { |h| h.y < than }
+    def self.shorter_than(max_height:, source:)
+      source.select { |h| h.y < max_height }
     end
   end
 end

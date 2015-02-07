@@ -30,30 +30,34 @@ module MaxPlanck
 
     def max_rectangle_area
       Coordinate.interesting(@holes).map do |coord|
-        remaining_coords = Coordinate.top_and_right(
-          of: coord,
-          source: @holes)
-
-        max_height = height
-        area = 0
-
-        loop do
-          nearest_coord = Coordinate.nearest(
-            source: remaining_coords,
-            max_width: width)
-
-          remaining_coords = Coordinate.shorter(
-            than: nearest_coord.y,
-            source: remaining_coords)
-
-          new_area = (nearest_coord.x - coord.x) * (max_height - coord.y)
-          area = new_area if new_area > area
-
-          max_height = nearest_coord.y
-
-          break(area) if nearest_coord.x == width
-        end
+        inner_rectangle_area(coord)
       end.max
+    end
+
+    def inner_rectangle_area(coord)
+      remaining_coords = Coordinate.top_and_right(
+        of: coord,
+        source: @holes)
+
+      max_height = height
+      area = 0
+
+      loop do
+        nearest_coord = Coordinate.nearest(
+          source: remaining_coords,
+          max_width: width)
+
+        remaining_coords = Coordinate.shorter_than(
+          source: remaining_coords,
+          max_height: nearest_coord.y)
+
+        new_area = (nearest_coord.x - coord.x) * (max_height - coord.y)
+        area = new_area if new_area > area
+
+        max_height = nearest_coord.y
+
+        break(area) if nearest_coord.x == width
+      end
     end
   end
 end
