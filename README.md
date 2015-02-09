@@ -4,7 +4,7 @@ Calculate the maximum rectangle that can be cut out of a plank
 with holes.
 
 ## Installation
-
+Requires Ruby 2.1+
 Add this line to your application's Gemfile:
 
 ```
