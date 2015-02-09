@@ -4,9 +4,7 @@ Calculate the maximum rectangle that can be cut out of a plank
 with holes.
 
 ## Installation
-Requires Ruby 2.1+
-Add this line to your application's Gemfile:
-
+Requires Ruby 2.1+  
 ```
 git clone https://github.com/bbonamin/max_planck
 cd max_planck
