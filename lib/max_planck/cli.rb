@@ -6,7 +6,7 @@ module MaxPlanck
       end
 
       Parser.parse(filepath: filepath)
-      puts 18
+      puts Plank.instance.max_rectangle_area
     rescue => e
       puts e
     end

@@ -6,6 +6,11 @@ describe 'Max Planck CLI Run' do
     expect(output).to match(/18/)
   end
 
+  it 'takes another file input and prints the maximum area rectangle' do
+    output = `bundle exec max_planck spec/support/plank-2.txt`
+    expect(output).to match(/40/)
+  end
+
   it 'prints an error if no file path is provided' do
     output = `bundle exec max_planck`
     expect(output).to match(/Error:/)
